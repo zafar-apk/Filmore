@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_home">
+
+    <fragment
+        android:id="@+id/navigation_home"
+        android:name="com.kangaroo.filmore.Views.ui.home.HomeFragment"
+        android:label="@string/title_home"
+        tools:layout="@layout/fragment_home" />
+
+    <fragment
+        android:id="@+id/navigation_discovery"
+        android:name="com.kangaroo.filmore.Views.ui.discover.DiscoverFragment"
+        android:label="@string/title_discovery"
+        tools:layout="@layout/fragment_discover" />
+
+    <fragment
+        android:id="@+id/navigation_search"
+        android:name="com.kangaroo.filmore.Views.ui.search.SearchFragment"
+        android:label="@string/title_search"
+        tools:layout="@layout/fragment_search" />
+
+    <fragment
+        android:id="@+id/detail_fragment"
+        android:name="com.kangaroo.filmore.Views.ui.detail.DetailFragment"
+        android:label="@string/title_search"
+        tools:layout="@layout/detail_fragment" />
+</navigation>

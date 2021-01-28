@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Filmore</string>
+    <string name="title_home">Главная</string>
+    <string name="title_discovery">Популярное</string>
+    <string name="title_search">Поиск</string>
+    <string name="title_detail">Подробнее</string>
+    <string name="descriptionIV">PosterImageView</string>
+    <string name="detail_picture">detail picture</string>
+    <string name="_1">Трейлер 1</string>
+    <string name="_2">Трейлер 2</string>
+    <string name="_3">Трейлер 3</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">TV fragment</string>
+    <string name="search_hint">Поиск</string>
+    <string name="hint_search">Поиск</string>
+</resources>
