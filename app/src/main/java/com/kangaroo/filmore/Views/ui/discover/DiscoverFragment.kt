@@ -34,7 +34,7 @@ class DiscoverFragment : Fragment(), OnItemClickListener {
             .load(R.layout.skeleton_movie_discover)
             .show()
 
-        discoverViewModel.listData.observe(viewLifecycleOwner, {
+        discoverViewModel.popularMoviesLiveData.observe(viewLifecycleOwner, {
             skeletonScreen.hide()
             adapter.submitList(it)
         })

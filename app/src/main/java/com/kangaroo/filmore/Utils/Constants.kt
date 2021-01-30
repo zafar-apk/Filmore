@@ -1,5 +1,8 @@
 package com.kangaroo.filmore.Utils
 
+import com.kangaroo.filmore.BuildConfig
+
+
 object Constants {
     const val LOG_TAG = "moviesAppLog"
     const val PREF = "myPref"
@@ -10,5 +13,6 @@ object Constants {
     const val DATA_ITEM_SELECTED = "item selected data"
     const val DATA_NAV_HOME= "navigation home"
     const val DATA_NAV_DISCOVERY= "navigation discovery"
-
+    var tmdbApiKey = BuildConfig.TMDB_API_KEY
+    var apiLanguage = "ru"
 }

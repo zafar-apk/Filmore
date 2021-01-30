@@ -20,11 +20,11 @@ class SearchFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         val root = inflater.inflate(R.layout.fragment_search, container, false)
-
         val viewPager2 = root.findViewById<ViewPager2>(R.id.view_pager_search_activity)
+
         val adapter = com.kangaroo.filmore.Utils.PagerAdapter(
-            activity?.supportFragmentManager!!,
-            activity?.lifecycle!!
+            requireActivity().supportFragmentManager,
+            requireActivity().lifecycle
         )
         viewPager2.adapter = adapter
         val tabLayout = root.findViewById<TabLayout>(R.id.tab_layout_search)
@@ -42,7 +42,7 @@ class SearchFragment : Fragment() {
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 if (!query.isNullOrEmpty()){
-                    searchViewModel.query.value = (query)
+                    searchViewModel.liveQuery.postValue(query)
                 }
                 return false
             }

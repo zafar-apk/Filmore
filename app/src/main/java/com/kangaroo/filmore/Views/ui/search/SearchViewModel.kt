@@ -2,21 +2,37 @@ package com.kangaroo.filmore.Views.ui.search
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.kangaroo.filmore.Models.ApiFactory
+import com.kangaroo.filmore.Models.MovieRepository
 import com.kangaroo.filmore.Models.OneMovie
-import com.kangaroo.filmore.Models.Repository
+import kotlinx.coroutines.*
+import kotlin.coroutines.CoroutineContext
 
 class SearchViewModel : ViewModel() {
 
-    val query = MutableLiveData<String>()
+    val liveQuery: MutableLiveData<String> = MutableLiveData()
 
-    private val repository = Repository()
+    private val parentJob = Job()
 
-    var liveListOfMovies: MutableLiveData<List<OneMovie>>? = null
+    private val coroutineContext: CoroutineContext
+        get() = parentJob + Dispatchers.Default
 
-    fun searchMoviesAndTV(query: String){
-        repository.getSearchedData(query)
-        liveListOfMovies?.value = repository.movies?.value
+    private val scope = CoroutineScope(coroutineContext)
+
+    private val repository : MovieRepository = MovieRepository(ApiFactory.tmdbApi)
+
+
+    val foundData = MutableLiveData<MutableList<OneMovie>>()
+
+    fun findMovies(query: String){
+        scope.launch {
+            val popularMovies = repository.searchMoviesInApi(query)
+            foundData.postValue(popularMovies)
+        }
     }
+
+
+    fun cancelAllRequests() = coroutineContext.cancel()
 
 }
 
