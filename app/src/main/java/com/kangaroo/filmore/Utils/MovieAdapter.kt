@@ -20,11 +20,19 @@ class MovieAdapter(val onItemClickListener: OnItemClickListener) :
         }
 
         override fun areContentsTheSame(oldItem: OneMovie, newItem: OneMovie): Boolean {
-            return oldItem.original_title.equals(newItem.original_title) &&
+            if (oldItem.first_air_date == null || newItem.first_air_date == null){
+                return  oldItem.original_title.equals(newItem.original_title) &&
+                        oldItem.overview.equals(newItem.overview) &&
+                        oldItem.title.equals(newItem.title) &&
+                        oldItem.poster_path.equals(newItem.poster_path) &&
+                        oldItem.release_date.equals(newItem.release_date)
+            }
+            else return oldItem.original_title.equals(newItem.original_title) &&
                     oldItem.overview.equals(newItem.overview) &&
                     oldItem.title.equals(newItem.title) &&
                     oldItem.poster_path.equals(newItem.poster_path) &&
-                    oldItem.release_date.equals(newItem.release_date)
+                    oldItem.first_air_date.equals(newItem.first_air_date)
+
         }
     }) {
 
@@ -45,10 +53,7 @@ class MovieAdapter(val onItemClickListener: OnItemClickListener) :
         }
 
         override fun onClick(p0: View?) {
-            onItemClickListener.onItemClick(
-                getItem(bindingAdapterPosition).id.toString(),
-                getItem(bindingAdapterPosition)
-            )
+            onItemClickListener.onItemClick(getItem(bindingAdapterPosition))
         }
     }
 
@@ -61,7 +66,9 @@ class MovieAdapter(val onItemClickListener: OnItemClickListener) :
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
         holder.title.text = getItem(position)?.title
         holder.originalTitle.text = getItem(position)?.original_title
-        holder.release.text = "Релиз:" + getItem(position)?.release_date
+        if (getItem(position).first_air_date == null){
+            holder.release.text = "Релиз:" + getItem(position)?.release_date
+        } else holder.release.text = "Дата первого показа:" + getItem(position)?.first_air_date
 
         Picasso.get().load(
             "https://image.tmdb.org/t/p/w500/" +

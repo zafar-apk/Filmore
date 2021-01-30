@@ -21,7 +21,7 @@ class SearchMovieFragment : Fragment(), OnItemClickListener {
     val searchViewModel: SearchViewModel by activityViewModels()
 
     lateinit var recyclerView: RecyclerView
-    lateinit var recyclerViewAdapter: MovieAdapter
+    lateinit var recyclerViewAndTvAdapter: MovieAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,29 +37,24 @@ class SearchMovieFragment : Fragment(), OnItemClickListener {
         })
 
         searchViewModel.foundData.observe(viewLifecycleOwner, {
-            recyclerViewAdapter.submitList(it)
+            recyclerViewAndTvAdapter.submitList(it)
         })
 
         return root
     }
 
     private fun setRecyclerView() {
-        recyclerViewAdapter = MovieAdapter(this)
+        recyclerViewAndTvAdapter = MovieAdapter(this)
         recyclerView.setHasFixedSize(true)
         recyclerView.layoutManager = LinearLayoutManager(context)
-        recyclerView.adapter = recyclerViewAdapter
+        recyclerView.adapter = recyclerViewAndTvAdapter
     }
 
 
-    companion object {
-        @JvmStatic
-        fun newInstance() =
-            SearchMovieFragment()
-    }
 
-    override fun onItemClick(id: String, oneMovie: OneMovie) {
+    override fun onItemClick(oneMovie: OneMovie) {
         val activity = activity as BottomMainActivity
-        activity.onClickItem(id, oneMovie)
+        activity.onClickItem(oneMovie)
     }
 }
 

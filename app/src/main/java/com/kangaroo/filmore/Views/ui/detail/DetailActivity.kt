@@ -8,12 +8,9 @@ import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModelProvider
 import com.kangaroo.filmore.Models.OneMovie
-import com.kangaroo.filmore.Models.VideoOneMovie
 import com.kangaroo.filmore.R
 import com.kangaroo.filmore.Utils.Constants
 import com.kangaroo.filmore.Utils.Constants.LOG_TAG
@@ -27,8 +24,8 @@ import com.squareup.picasso.Picasso
 
 class DetailActivity : AppCompatActivity() {
 
-    private lateinit var viewModel: DetailViewModel
-    private lateinit var liveList: LiveData<List<VideoOneMovie>>
+   val viewModel: DetailViewModel by viewModels()
+
     lateinit var poster: ImageView
     lateinit var titleText: TextView
     lateinit var originalTitleText: TextView
@@ -44,16 +41,20 @@ class DetailActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail)
-        viewModel = ViewModelProvider(this).get(DetailViewModel::class.java)
+
         initViewsAndProperties()
 
-        youTubePlayerView = findViewById<YouTubePlayerView>(R.id.youtube_player_view)
+        val oneMovie = intent?.getParcelableExtra<OneMovie?>("oneMovie")
+
+        youTubePlayerView = findViewById(R.id.youtube_player_view)
 
         this.lifecycle.addObserver(youTubePlayerView)
 
-        showPlayer(0, youTubePlayerView)
+        setDataToView(oneMovie)
 
-        setDataToView()
+        showPlayer(0, youTubePlayerView, oneMovie)
+
+
 
         clickListener = View.OnClickListener {
             when (it.id) {
@@ -78,26 +79,30 @@ class DetailActivity : AppCompatActivity() {
     }
 
     @SuppressLint("SetTextI18n")
-    private fun setDataToView() {
-        val oneMovie: OneMovie? = intent.getParcelableExtra("oneMovie")
-        title = oneMovie?.title
-        Picasso.get()
-            .load("https://image.tmdb.org/t/p/w500/" + oneMovie?.poster_path)
-            .into(poster)
-        titleText.text = oneMovie?.title
-        originalTitleText.text = "Оригинальное название: " + oneMovie?.original_title
-        releaseTextView.text = "Дата релиза: " + oneMovie?.release_date
-        overView.text = "Краткое описание: " + oneMovie?.overview
+    private fun setDataToView(oneMovie: OneMovie?) {
+        if (oneMovie?.first_air_date == null){
+            releaseTextView.text = "Релиз:" + oneMovie?.release_date
+        } else releaseTextView.text = "Дата первого показа:" + oneMovie.first_air_date
+
+            title = oneMovie?.title
+            Picasso.get()
+                .load("https://image.tmdb.org/t/p/w500/" + oneMovie?.poster_path)
+                .into(poster)
+            titleText.text = oneMovie?.title
+            originalTitleText.text = "Оригинальное название: " + oneMovie?.original_title
+            overView.text = "Краткое описание: " + oneMovie?.overview
+
 
     }
 
     private fun initViewsAndProperties() {
-        liveList = MutableLiveData()
+
         poster = findViewById(R.id.poster_detail)
         titleText = findViewById(R.id.title_detail)
         originalTitleText = findViewById(R.id.title_original_detail)
         releaseTextView = findViewById(R.id.release_detail)
         overView = findViewById(R.id.overview_detail)
+
         button1 = findViewById(R.id.button1)
         button2 = findViewById(R.id.button2)
         button3 = findViewById(R.id.button3)
@@ -107,10 +112,10 @@ class DetailActivity : AppCompatActivity() {
         button3.setOnClickListener(clickListener)
     }
 
-    private fun showPlayer(number: Int, youTubePlayerView: YouTubePlayerView) {
-        liveList = viewModel.getMovieVideo(intent.getStringExtra("id")!!)
-        liveList.observe(this, {
-            if (it.isNotEmpty()) {
+    private fun showPlayer(number: Int, youTubePlayerView: YouTubePlayerView, oneMovie: OneMovie?) {
+        viewModel.getVideoOfVideo(oneMovie?.id.toString())
+        viewModel.movieVideo.observe(this, {
+            if (it?.isNotEmpty() == true) {
                 Log.d(LOG_TAG, it.toString())
                 val intent_toFullScreen =
                     Intent(this@DetailActivity, FullScreenActivityYouTube::class.java)

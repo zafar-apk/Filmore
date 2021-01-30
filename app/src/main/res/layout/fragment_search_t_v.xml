@@ -5,10 +5,10 @@
     android:layout_height="match_parent"
     tools:context=".Views.ui.search.SearchTVFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view_t_v_search"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        />
 
 </FrameLayout>

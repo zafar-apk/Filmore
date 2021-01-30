@@ -25,7 +25,7 @@ class DiscoverViewModel : ViewModel() {
 
     val popularMoviesLiveData = MutableLiveData<MutableList<OneMovie>>()
 
-    fun fetchMovies(query: String){
+    fun fetchMovies(){
         scope.launch {
             val popularMovies = repository.getPopularMovies()
             popularMoviesLiveData.postValue(popularMovies)

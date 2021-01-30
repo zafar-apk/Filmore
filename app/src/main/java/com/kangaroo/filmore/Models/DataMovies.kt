@@ -7,15 +7,15 @@ import kotlinx.parcelize.Parcelize
 
 // Object of Video details and name e. t. c
 @Parcelize
-data class OneMovie(
-    var id: Int? = null,
-    var title:String? = null,
-    var poster_path:String? = null,
-    var release_date:String? = null,
-    var overview:String? = null,
-    var original_title:String? = null) : Parcelable
+data class OneMovie(var id: Int? = null,
+                    var title: String? = null,
+                    var poster_path: String? = null,
+                    var overview: String? = null,
+                    var original_title: String? = null,
+                    var release_date: String? = null,
+                    var first_air_date: String? = null): Parcelable
 
-// Response from api
+// Response from api -> Movie
 data class Movie(var results: List<OneMovie>? = null)
 
 
@@ -24,3 +24,5 @@ data class VideoOneMovie(var key: String? = null)
 
 //Object with array of VideoOneMovie objects
 data class VideoMovie(var results: List<VideoOneMovie>? = null)
+
+

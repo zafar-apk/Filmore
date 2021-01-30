@@ -50,9 +50,8 @@ lateinit var fragmentContainerView: FragmentContainerView
             .commit()
     }
 
-    fun onClickItem(id: String, oneMovie: OneMovie){
+    fun onClickItem(oneMovie: OneMovie){
         val intent = Intent(this, DetailActivity::class.java)
-        intent.putExtra("id", id)
         intent.putExtra("oneMovie", oneMovie)
         startActivity(intent)
     }

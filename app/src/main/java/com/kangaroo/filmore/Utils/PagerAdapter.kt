@@ -17,9 +17,9 @@ class PagerAdapter(fm: FragmentManager, behavior: Lifecycle)
 
     override fun createFragment(position: Int): Fragment {
         return when (position) {
-            0 -> (SearchMovieFragment.newInstance())
-            1 -> (SearchTVFragment.newInstance())
-            else -> (SearchMovieFragment.newInstance())
+            0 -> (SearchMovieFragment())
+            1 -> (SearchTVFragment())
+            else -> (SearchMovieFragment())
         }
     }
 
