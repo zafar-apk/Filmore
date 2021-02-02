@@ -82,14 +82,18 @@ class DetailActivity : AppCompatActivity() {
     private fun setDataToView(oneMovie: OneMovie?) {
         if (oneMovie?.first_air_date == null){
             releaseTextView.text = "Релиз:" + oneMovie?.release_date
-        } else releaseTextView.text = "Дата первого показа:" + oneMovie.first_air_date
-
             title = oneMovie?.title
+            titleText.text = oneMovie?.title
+            originalTitleText.text = "Оригинальное название: " + oneMovie?.original_title
+        } else {
+            releaseTextView.text = "Дата первого показа:" + oneMovie.first_air_date
+            title = oneMovie.name
+            titleText.text = oneMovie.name
+            originalTitleText.text = "Оригинальное название: " + oneMovie.original_name
+        }
             Picasso.get()
                 .load("https://image.tmdb.org/t/p/w500/" + oneMovie?.poster_path)
                 .into(poster)
-            titleText.text = oneMovie?.title
-            originalTitleText.text = "Оригинальное название: " + oneMovie?.original_title
             overView.text = "Краткое описание: " + oneMovie?.overview
 
 

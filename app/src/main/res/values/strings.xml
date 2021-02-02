@@ -13,4 +13,5 @@
     <string name="hello_blank_fragment">TV fragment</string>
     <string name="search_hint">Поиск</string>
     <string name="hint_search">Поиск</string>
+    <string name="top_text">Сборки фильмов и ТВ - передач</string>
 </resources>

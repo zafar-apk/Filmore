@@ -10,17 +10,24 @@ interface ApiTMDB {
 
     //Получение списка фильмов -> discover
     @GET("discover/movie")
-    fun getMovieList(): Deferred<Response<Movie>>
+    fun getMovieListAsync(
+        @Query("page") page: Int
+    ): Deferred<Response<Movie>>
 
     //Получение списка трейлеров фильма -> Youtube
     @GET("movie/{movieID}/videos")
-    fun getMovieVideo(@Path("movieID") movieId :String): Deferred<Response<VideoMovie>>
+    fun getMovieVideoAsync(
+        @Path("movieID") movieId: String
+    ): Deferred<Response<VideoMovie>>
 
     //Поиск -> Query
-    @GET("search/multi")
-    fun getSearchedData(
+    @GET("search/movie")
+    fun getFoundMovieAsync(
         @Query("query") query: String,
     ): Deferred<Response<Movie>>
 
-
+    @GET("search/tv")
+    fun getFoundTvShowAsync(
+        @Query("query") query: String,
+    ): Deferred<Response<Movie>>
 }

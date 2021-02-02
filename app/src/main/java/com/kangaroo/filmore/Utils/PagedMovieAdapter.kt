@@ -6,15 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.kangaroo.filmore.Models.OneMovie
 import com.kangaroo.filmore.R
 import com.squareup.picasso.Picasso
 
-class MovieAdapter(val onItemClickListener: OnItemClickListener) :
-    ListAdapter<OneMovie, MovieAdapter.MovieViewHolder>(object : DiffUtil.ItemCallback<OneMovie>() {
+class PagedMovieAdapter(val onItemClickListener: OnItemClickListener) :
+    PagedListAdapter<OneMovie, PagedMovieAdapter.MovieViewHolder>(object : DiffUtil.ItemCallback<OneMovie>() {
         override fun areItemsTheSame(oldItem: OneMovie, newItem: OneMovie): Boolean {
             return oldItem.id == newItem.id
         }
@@ -43,7 +43,7 @@ class MovieAdapter(val onItemClickListener: OnItemClickListener) :
         }
 
         override fun onClick(p0: View?) {
-            onItemClickListener.onItemClick(getItem(bindingAdapterPosition))
+            getItem(bindingAdapterPosition)?.let { onItemClickListener.onItemClick(it) }
         }
     }
 
@@ -54,7 +54,7 @@ class MovieAdapter(val onItemClickListener: OnItemClickListener) :
 
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
-        if (getItem(position).first_air_date == null) {
+        if (getItem(position)?.first_air_date == null) {
             holder.release.text = "Релиз:" + getItem(position)?.release_date
             holder.title.text = getItem(position)?.title
             holder.originalTitle.text = getItem(position)?.original_title

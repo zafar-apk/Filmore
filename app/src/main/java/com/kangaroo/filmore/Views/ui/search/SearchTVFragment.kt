@@ -31,10 +31,13 @@ class SearchTVFragment : Fragment(), OnItemClickListener {
         setRecyclerView()
 
         searchViewModel.liveQuery.observe(viewLifecycleOwner, {
-            searchViewModel.findMovies(it)
+            if (BottomMainActivity.hasConnection(requireContext())){
+                searchViewModel.findTvShows(it)
+            } else TODO()
+
         })
 
-        searchViewModel.foundData.observe(viewLifecycleOwner, {
+        searchViewModel.foundTvShowData.observe(viewLifecycleOwner, {
             recyclerViewAndTvAdapter.submitList(it)
         })
 

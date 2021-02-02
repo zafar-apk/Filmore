@@ -21,7 +21,7 @@ class SearchFragment : Fragment() {
 
         val root = inflater.inflate(R.layout.fragment_search, container, false)
         val viewPager2 = root.findViewById<ViewPager2>(R.id.view_pager_search_activity)
-
+        val searchView: SearchView = root.findViewById(R.id.search_view_in_fragment)
         val adapter = com.kangaroo.filmore.Utils.PagerAdapter(
             requireActivity().supportFragmentManager,
             requireActivity().lifecycle
@@ -33,12 +33,19 @@ class SearchFragment : Fragment() {
             tabLayout, viewPager2
         ) { tab, position ->
             when (position) {
-                0 -> tab.text = "Movies"
-                1 -> tab.text = "TV"
+                0 -> tab.text = "Фильмы"
+                1 -> tab.text = "ТВ - передачи"
             }
         }.attach()
 
-        val searchView: SearchView = root.findViewById(R.id.search_view_in_fragment)
+        viewPager2.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                if (position == 0) searchView.queryHint = "Поиск по фильмам"
+                else searchView.queryHint = "Поиск по ТВ - передачам"
+            }
+        })
+
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 if (!query.isNullOrEmpty()){

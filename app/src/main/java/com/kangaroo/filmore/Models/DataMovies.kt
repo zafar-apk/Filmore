@@ -13,11 +13,12 @@ data class OneMovie(var id: Int? = null,
                     var overview: String? = null,
                     var original_title: String? = null,
                     var release_date: String? = null,
-                    var first_air_date: String? = null): Parcelable
+                    var first_air_date: String? = null,
+                    var name: String? = null,
+                    var original_name: String? = null): Parcelable
 
 // Response from api -> Movie
 data class Movie(var results: List<OneMovie>? = null)
-
 
 // Object of Video from array of Movie objects
 data class VideoOneMovie(var key: String? = null)

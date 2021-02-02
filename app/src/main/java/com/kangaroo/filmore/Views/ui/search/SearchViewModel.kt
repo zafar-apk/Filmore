@@ -22,12 +22,21 @@ class SearchViewModel : ViewModel() {
     private val repository : MovieRepository = MovieRepository(ApiFactory.tmdbApi)
 
 
-    val foundData = MutableLiveData<MutableList<OneMovie>>()
+    val foundMovieData = MutableLiveData<MutableList<OneMovie>>()
+    val foundTvShowData = MutableLiveData<MutableList<OneMovie>>()
 
     fun findMovies(query: String){
         scope.launch {
-            val popularMovies = repository.searchMoviesInApi(query)
-            foundData.postValue(popularMovies)
+            val foundMovieDataTemp = repository.searchMoviesInApi(query)
+            foundMovieData.postValue(foundMovieDataTemp)
+        }
+    }
+
+    fun findTvShows(query: String){
+        scope.launch {
+            val foundTvShowDataTemp = repository.searchTvShowsInApi(query)
+            foundTvShowData.postValue(foundTvShowDataTemp)
+
         }
     }
 

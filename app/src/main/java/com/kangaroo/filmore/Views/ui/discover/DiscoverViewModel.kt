@@ -1,14 +1,14 @@
 package com.kangaroo.filmore.Views.ui.discover
 
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.paging.LivePagedListBuilder
+import androidx.paging.PagedList
 import com.kangaroo.filmore.Models.ApiFactory
+import com.kangaroo.filmore.Models.MovieDataSourceFactory
 import com.kangaroo.filmore.Models.MovieRepository
-import com.kangaroo.filmore.Models.OneMovie
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
 import kotlin.coroutines.CoroutineContext
 
 class DiscoverViewModel : ViewModel() {
@@ -22,13 +22,14 @@ class DiscoverViewModel : ViewModel() {
 
     private val repository : MovieRepository = MovieRepository(ApiFactory.tmdbApi)
 
+    val source = MovieDataSourceFactory(repository, scope)
 
-    val popularMoviesLiveData = MutableLiveData<MutableList<OneMovie>>()
+    val livePagedList = LivePagedListBuilder(source, pagedListConfig()).build()
 
-    fun fetchMovies(){
-        scope.launch {
-            val popularMovies = repository.getPopularMovies()
-            popularMoviesLiveData.postValue(popularMovies)
-        }
-    }
+    private fun pagedListConfig() = PagedList.Config.Builder()
+        .setPageSize(20)
+        .setEnablePlaceholders(false)
+        .build()
+
 }
+
