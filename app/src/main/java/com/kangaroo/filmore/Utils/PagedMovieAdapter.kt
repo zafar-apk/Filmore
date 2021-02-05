@@ -6,26 +6,25 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.paging.PagedListAdapter
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.kangaroo.filmore.Models.OneMovie
 import com.kangaroo.filmore.R
+import com.kangaroo.filmore.Views.ui.discover.DiscoverFragment
 import com.squareup.picasso.Picasso
 
-class PagedMovieAdapter(val onItemClickListener: OnItemClickListener) :
-    PagedListAdapter<OneMovie, PagedMovieAdapter.MovieViewHolder>(object : DiffUtil.ItemCallback<OneMovie>() {
-        override fun areItemsTheSame(oldItem: OneMovie, newItem: OneMovie): Boolean {
-            return oldItem.id == newItem.id
-        }
+class PagedMovieAdapter(
+    val onItemClickListener: OnItemClickListener,
+    val discoverFragment: DiscoverFragment
+) :
+    PagingDataAdapter<OneMovie, PagedMovieAdapter.MovieViewHolder>(object :
+        DiffUtil.ItemCallback<OneMovie>() {
+        override fun areItemsTheSame(oldItem: OneMovie, newItem: OneMovie) =
+            oldItem.id == newItem.id
 
-        override fun areContentsTheSame(oldItem: OneMovie, newItem: OneMovie): Boolean {
-            return oldItem == newItem
-
-        }
+        override fun areContentsTheSame(oldItem: OneMovie, newItem: OneMovie) = oldItem == newItem
     }) {
-
-
 
     inner class MovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView),
         View.OnClickListener {
@@ -35,6 +34,7 @@ class PagedMovieAdapter(val onItemClickListener: OnItemClickListener) :
         var originalTitle: TextView
 
         init {
+
             itemView.setOnClickListener(this)
             moviePoster = itemView.findViewById(R.id.poster_image_view)
             title = itemView.findViewById(R.id.title_text_view)
@@ -68,8 +68,6 @@ class PagedMovieAdapter(val onItemClickListener: OnItemClickListener) :
             "https://image.tmdb.org/t/p/w500/" +
                     getItem(position)?.poster_path
         ).into(holder.moviePoster)
-
-
     }
 
 
