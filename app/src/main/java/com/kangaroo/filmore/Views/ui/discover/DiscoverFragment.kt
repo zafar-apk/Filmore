@@ -46,14 +46,9 @@ class DiscoverFragment : Fragment(), OnItemClickListener {
         setupView()
 
         skeletonScreen = Skeleton.bind(recyclerView)
-              .adapter(moviesAdapter)
-              .load(R.layout.skeleton_movie_discover)
-              .show()
-
-        liveDataChangeListener.observe(viewLifecycleOwner, {
-            //    recyclerView.adapter = moviesAdapter
-            Log.d(LOG_TAG, "Live data observing")
-        })
+            .adapter(moviesAdapter)
+            .load(R.layout.skeleton_movie_discover)
+            .show()
 
         return root
     }
@@ -64,26 +59,34 @@ class DiscoverFragment : Fragment(), OnItemClickListener {
         fab_scrollUp = view.findViewById(R.id.fab_scroll_up)
 
         recyclerView = view.findViewById(R.id.discover_recycler)
-        val layoutManager = LinearLayoutManager(requireContext())
         recyclerView.apply {
             setHasFixedSize(true)
             adapter = moviesAdapter
-            this.layoutManager = layoutManager
+            this.layoutManager = LinearLayoutManager(requireContext())
             addOnScrollListener(object : RecyclerView.OnScrollListener() {
 
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                     var previousDy = 0
                     super.onScrolled(recyclerView, dx, dy)
-                    if (dy > 0) {
+                    if (dy < 0) {
                         previousDy = dy
                         showFabScrollUp()
                     }
-                    if (dy < previousDy) {
+                    if (dy > previousDy) {
                         hideFabScrollUp()
                     }
                 }
             })
+
         }
+        
+        moviesAdapter.addLoadStateListener { loadState ->
+            if (moviesAdapter.snapshot().isNotEmpty()) {
+                skeletonScreen.hide()
+            }
+
+        }
+
 
         fab_scrollUp.setOnClickListener {
             recyclerView.smoothScrollToPosition(0)
@@ -103,9 +106,6 @@ class DiscoverFragment : Fragment(), OnItemClickListener {
         lifecycleScope.launch {
             discoverViewModel.listData.collect {
                 moviesAdapter.submitData(it)
-                withContext(Dispatchers.Main){
-                    skeletonScreen.hide()
-                }
             }
         }
     }
