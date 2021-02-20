@@ -9,16 +9,17 @@
         android:layout_height="match_parent">
 
         <ImageView
-            android:id="@+id/poster_detail"
+            android:id="@+id/back_drop_detail"
             android:layout_width="match_parent"
             android:layout_height="200dp"
+            android:scaleType="centerCrop"
             android:contentDescription="@string/detail_picture" />
 
         <TextView
             android:id="@+id/title_detail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/poster_detail"
+            android:layout_below="@id/back_drop_detail"
             android:layout_centerHorizontal="true"
             android:text="@string/app_name"
             android:textAppearance="@style/TextAppearance.AppCompat.Large" />
@@ -39,7 +40,7 @@
             android:layout_below="@id/release_detail" />
 
         <LinearLayout
-            android:id="@+id/linear"
+            android:id="@+id/linearButtons"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/overview_detail"
@@ -78,10 +79,31 @@
 
         <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
             android:id="@+id/youtube_player_view"
-            android:layout_below="@id/linear"
+            android:layout_below="@id/linearButtons"
             android:layout_width="match_parent"
             android:layout_height="250dp"
-            android:visibility="invisible"
+            android:visibility="gone"
+            app:autoPlay="false"
+            app:showYouTubeButton="false"
+            app:showFullScreenButton="true" />
+
+        <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
+            android:id="@+id/second_youtube_player_view"
+            android:layout_below="@id/linearButtons"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:visibility="gone"
+            app:autoPlay="false"
+            app:showYouTubeButton="false"
+            app:showFullScreenButton="true" />
+
+        <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
+            android:id="@+id/third_youtube_player_view"
+            android:layout_below="@id/linearButtons"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:visibility="gone"
+            app:autoPlay="false"
             app:showYouTubeButton="false"
             app:showFullScreenButton="true" />
     </RelativeLayout>

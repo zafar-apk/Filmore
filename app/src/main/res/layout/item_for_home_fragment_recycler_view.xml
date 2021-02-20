@@ -10,13 +10,13 @@
 
     <ImageView
         android:id="@+id/button_image_view"
-        android:layout_width="300dp"
+        android:layout_width="150dp"
         android:layout_height="150dp"
-        android:elevation="@dimen/_8dp"
+        android:scaleType="centerCrop"
+        android:paddingBottom="22dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:scaleType="centerCrop" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.cardview.widget.CardView>
 

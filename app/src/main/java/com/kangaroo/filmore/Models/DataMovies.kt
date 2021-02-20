@@ -15,6 +15,7 @@ data class OneMovie(var id: Int? = null,
                     var release_date: String? = null,
                     var first_air_date: String? = null,
                     var name: String? = null,
+                    var backdrop_path: String? = null,
                     var original_name: String? = null): Parcelable
 
 // Response from api -> Movie

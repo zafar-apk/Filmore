@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ethanhua.skeleton.RecyclerViewSkeletonScreen
@@ -62,7 +63,7 @@ class DiscoverFragment : Fragment(), OnItemClickListener {
         recyclerView.apply {
             setHasFixedSize(true)
             adapter = moviesAdapter
-            this.layoutManager = LinearLayoutManager(requireContext())
+            this.layoutManager = GridLayoutManager(requireContext(), 2)
             addOnScrollListener(object : RecyclerView.OnScrollListener() {
 
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
