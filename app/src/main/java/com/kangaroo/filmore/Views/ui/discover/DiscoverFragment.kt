@@ -56,7 +56,7 @@ class DiscoverFragment : Fragment(), OnItemClickListener {
 
 
     private fun setRecyclerView(view: View) {
-        moviesAdapter = PagedMovieAdapter(this, this)
+        moviesAdapter = PagedMovieAdapter(this)
         fab_scrollUp = view.findViewById(R.id.fab_scroll_up)
 
         recyclerView = view.findViewById(R.id.discover_recycler)

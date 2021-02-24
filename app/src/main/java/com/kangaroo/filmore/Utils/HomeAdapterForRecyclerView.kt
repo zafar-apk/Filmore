@@ -12,19 +12,19 @@ import androidx.recyclerview.widget.RecyclerView
 import com.kangaroo.filmore.R
 import com.kangaroo.filmore.Views.ui.details.DetailsHome
 
-class HomeAdapterForRecyclerView(val context: Context) :
+class HomeAdapterForRecyclerView(val context: Context, val mediaType: String) :
     RecyclerView.Adapter<HomeAdapterForRecyclerView.HomeFragmentViewHolder>() {
 
     var images: ArrayList<Drawable>? = null
 
     inner class HomeFragmentViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var image_button: ImageView
+        var image_button: ImageView = itemView.findViewById(R.id.button_image_view)
 
         init {
-            image_button = itemView.findViewById(R.id.button_image_view)
             image_button.setOnClickListener {
                 val intent = Intent(context, DetailsHome::class.java)
                 intent.putExtra(Constants.DATA_POSITION, bindingAdapterPosition)
+                intent.putExtra(Constants.DATA_MEDIA_TYPE, mediaType)
                 context.startActivity(intent)
             }
         }

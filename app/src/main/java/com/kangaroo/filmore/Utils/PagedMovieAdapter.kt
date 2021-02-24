@@ -15,8 +15,7 @@ import com.kangaroo.filmore.Views.ui.discover.DiscoverFragment
 import com.squareup.picasso.Picasso
 
 class PagedMovieAdapter(
-    val onItemClickListener: OnItemClickListener,
-    val discoverFragment: DiscoverFragment
+    val onItemClickListener: OnItemClickListener
 ) :
     PagingDataAdapter<OneMovie, PagedMovieAdapter.MovieViewHolder>(object :
         DiffUtil.ItemCallback<OneMovie>() {

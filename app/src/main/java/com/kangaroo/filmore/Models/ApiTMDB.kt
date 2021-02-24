@@ -30,4 +30,13 @@ interface ApiTMDB {
     fun getFoundTvShowAsync(
         @Query("query") query: String,
     ): Deferred<Response<Movie>>
+
+    //Получение списка trending -> home fragment
+    @GET("trending/{media_type}/{time_window}")
+    fun getTrendingListAsync(
+        @Path("media_type") media_type: String,
+        @Path("time_window") time_window: String,
+        @Query("page") page: Int
+    ): Deferred<Response<Movie>>
+
 }

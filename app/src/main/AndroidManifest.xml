@@ -11,7 +11,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Filmore">
-        <activity android:name=".Views.ui.details.DetailsHome"/>
+        <activity android:name=".Views.ui.details.DetailsHome"
+            android:parentActivityName=".Views.BottomMainActivity"
+            android:launchMode="singleTop"/>
         <activity
             android:name=".Views.ui.detail.FullScreenActivityYouTube"
             android:parentActivityName=".Views.ui.detail.DetailActivity"

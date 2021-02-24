@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager.HORIZONTAL
 import androidx.recyclerview.widget.RecyclerView
 import com.kangaroo.filmore.R
+import com.kangaroo.filmore.Utils.Constants
 import com.kangaroo.filmore.Utils.HomeAdapterForRecyclerView
 
 
@@ -26,12 +27,25 @@ class HomeFragment : Fragment() {
             ViewModelProvider(this).get(HomeViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_home, container, false)
 
-        val recyclerView = root.findViewById<RecyclerView>(R.id.recycler_home)
-        recyclerView.setHasFixedSize(true)
-        val layoutManager = LinearLayoutManager(context)
-        layoutManager.orientation = HORIZONTAL
-        recyclerView.layoutManager = layoutManager
-        recyclerView.adapter = HomeAdapterForRecyclerView(requireContext())
+        val recyclerViewMovie = root.findViewById<RecyclerView>(R.id.recycler_home_movies)
+        val layoutManagerMovie = LinearLayoutManager(context)
+        layoutManagerMovie.orientation = HORIZONTAL
+
+        recyclerViewMovie.apply {
+            setHasFixedSize(true)
+            this.layoutManager = layoutManagerMovie
+            adapter = HomeAdapterForRecyclerView(requireContext(), Constants.MEDIA_TYPE_MOVIE)
+        }
+
+        val recyclerViewTV = root.findViewById<RecyclerView>(R.id.recycler_home_tv_shows)
+        val layoutManagerTV = LinearLayoutManager(context)
+        layoutManagerTV.orientation = HORIZONTAL
+
+        recyclerViewTV.apply {
+            setHasFixedSize(true)
+            this.layoutManager = layoutManagerTV
+            adapter = HomeAdapterForRecyclerView(requireContext(), Constants.MEDIA_TYPE_TV)
+        }
 
 
         return root
